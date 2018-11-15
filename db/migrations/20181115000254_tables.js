@@ -15,10 +15,11 @@ exports.up = function(knex, Promise) {
 		table.string('description');
 		table.timestamps(true, true);
 		table.boolean('redFlag').notNull();
-        table.integer('user_id').references('id').inTable('users');
-	}
+    table.integer('user_id').references('id').inTable('users');
+	})
 };
 
 exports.down = function(knex, Promise) {
-  
+	return knex.schema.dropTable('users')
+	.dropTable('action')
 };
