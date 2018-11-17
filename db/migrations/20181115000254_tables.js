@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-	return knex.schema.createTable('user', (table) => {
+	return knex.schema.createTable('users', (table) => {
 		table.increments();
 		table.string('name').notNull();
 		table.string('email').notNull();
@@ -9,10 +9,10 @@ exports.up = function(knex, Promise) {
 		table.integer('redPoints');
 		table.integer('greenPoints');
 	})
-	.createTable('dailyList', (table) => {
+	.createTable('dayli_list', (table) => {
 		table.increments();
 		table.boolean('active').notNull();
-		table.integer('user_id').references('id').inTable('user');
+		table.integer('users_id').references('id').inTable('users');
 		table.timestamps(true, true);
 	})
 	.createTable('actions', (table) => {
@@ -21,12 +21,12 @@ exports.up = function(knex, Promise) {
 		table.string('description');
 		table.boolean('redFlag').notNull();
 		table.string('color_category')
-    	table.integer('dailyList_id').references('id').inTable('dailyList');
+    	table.integer('dayli_list_id').references('id').inTable('dayli_list');
 	})
 };
 
 exports.down = function(knex, Promise) {
-	return knex.schema.dropTable('user')
+	return knex.schema.dropTable('users')
 	.dropTable('action')
-	.dropTable('dailyList')
+	.dropTable('daily_list')
 };
