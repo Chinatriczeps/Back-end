@@ -8,6 +8,7 @@ module.exports = (knex) => {
       .select("*")
       .from("users")
       .then((results) => {
+        console.log(results, "results")
         res.json(results);
     }).catch(err => {
     	console.log("users route", err)
