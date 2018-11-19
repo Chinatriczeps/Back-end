@@ -20,11 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.static("public"));
 
-const fetchedData = require('./api/fetch.js')(knex)
 
 const usersRoutes = require("./routes/users");
 const daily_listRoutes = require('./routes/dayli_list');
 const actionRoutes = require("./routes/actions");
+const fetchedData = require('./api/fetch.js')(knex)
 
 app.use("/routes/users", usersRoutes(knex));
 app.use("/routes/dayli_list", daily_listRoutes(knex));
