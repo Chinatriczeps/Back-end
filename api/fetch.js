@@ -2,19 +2,20 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const connection = (knex) => {
-	fetch('https://localhost:8080.')
+	fetch('https://localhost:8080/')
 	    .then(res => res.json())
 	    .then(json => console.log(json));
 
-  const insertAction = (title, description, redFlag, colorCategtory) => {
-    return knex('actions').returning('*')
+  const insertListItem = (active, date) => {
+    return knex('dayli_list').returning('*')
     .insert({
-      title: title,
-      description: description,
-      user_id: user,
-      redFlag: true,
+      active: true,
+      date: date,
+      user_id: user
     })
   }
+
+  
 
 }
 
