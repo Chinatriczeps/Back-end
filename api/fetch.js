@@ -17,10 +17,6 @@ const connection = (knex) => {
       return res.json()
     }).catch(err => {
       console.log("List item res.json", err);
-    }).then((data) => {
-      return data.Response === 'True'
-    }).catch(err => {
-      console.log("data response error", err);
     })
   }
 
@@ -30,4 +26,4 @@ const connection = (knex) => {
 
 
 
-module.exports = connectionn
+module.exports = connection;

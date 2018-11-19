@@ -11,6 +11,8 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const fetch       = require('node-fetch');
+const jwt  				= require('jsonwebtoken');
+const bcrypt  		= require('bcrypt');
 
 
 app.use(morgan('dev'));
@@ -40,37 +42,99 @@ app.get("/", (req, res) => {
 	// }).catch(err => {
 	// 	console.log("users route", err)
 	// });
+	res.send('duuuuude')
 });
 
+app.post('/login', (req, res) => {
 
-// app.get('/userid', (req, res) => {
-// 	ree.send('sends user id to front end')
-// })
+	
+ //  if (password === '' || email === "") {
+ //    res.send('Both the email and password fields are required')
+ //    return;
+ //  }
 
-// app.post('/register', (req, res) => {
-// 	res.send("registration route");
-// });
+ //  knex.select('id', 'email', 'password').from('users')
+ //  .then((arrOfUsers) => {
+	//   let userMatch;
+	//   console.log(password)
+	//   arrOfUsers.forEach((user) => {
+	//   	if(req.body.email == user.email && req.body.password == bcrypt.compareSync(password, user.password)){
+	// 			res.send('a token');
+	// 		} else {
+	// 			res.sendStatus(400);
+ //  		}
+ //  	})
+	// });
+});
 
-// app.post('/login', (req, res) => {
-// 	res.send("login route");
-// });
+app.post('/logout', (req, res) => {
+	res.sned("logout route");
+});
 
-// app.post('/logout', (req, res) => {
-// 	res.sned("logout route");
-// });
+app.post('/register', (req, res) => {
+	res.send("registration route");
+});
 
-// app.post('/user/:id/edit', (req, res) => {
-// 	res.send('edit users profile');
-// });
+app.get('/users', (req, res) => {
+	knex
+		.select('*')
+		.from('users')
+		.then((results) => {
+			res.json(results)
+		}).catch((err) => {
+			console.log("Users ID req", err)
+		})
+})
 
-// app.post('/action/:id/delete', (req, res) => {
-// 	res.send('delete an action');
-// });
+app.get('/user/:id', (req, res) => {
+	knex
+		.select('*')
+		.from('users')
+		.where({id: req.params.id})
+		.then((results) => {
+			res.json(results)
+		}).catch((err) => {
+			console.log("id error", err)
+		})
+})
 
-// app.post('/action/new', (req, res) => {
-// 	res.send('add a new action');
-// });
+app.post('/user/:id/edit', (req, res) => {
+	knex('users').where({
+    id: req.params.id
+  }).update({
+    email: req.body.email,
+    password: 'string'
+  }).then(() => {
+  	res.send("user has been updated")
+    // res.redirect('/');
+    return;
+  }).catch(err => {
+    console.log("Users id edit", err);
+  })
+});
 
+app.get('/overview', (req, res) => {
+	// for graphs
+	res.send("overview")
+})
+
+app.post('/dayli_list/:id/edit', (req, res) => {
+  return knex('dayli_list').returning('*').where({
+    id: req.body.id,
+  }).update({
+  	active: req.body.active
+  }).then((result) => {
+    res.json(result)
+  }).catch(err => {
+    console.log("editing daylist", err);
+  }).then(() => {
+  	res.send('Dayli list has been updated')
+  	// res.redirect('/')
+  	return;
+  }).catch((err) => {
+  	console.log("REDIRECT ERROR", err)
+  })
+})
 
 app.listen(PORT, () => {
   console.log("App listening on port " + PORT);
