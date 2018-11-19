@@ -24,6 +24,8 @@ const connection = (knex) => {
     })
   }
 
+  return listItem;
+
 }
 
 
