@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
+	res.send('Login page')
 	
  //  if (password === '' || email === "") {
  //    res.send('Both the email and password fields are required')

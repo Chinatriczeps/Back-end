@@ -12,7 +12,7 @@ const connection = (knex) => {
   }
 
   const listItem = (input) => {
-  	return fetch('http://localhost:8080')
+  	return fetch(`http://localhost:8080`)
   	.then((res) => {
       return res.json()
     }).catch(err => {
