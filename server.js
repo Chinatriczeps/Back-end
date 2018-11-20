@@ -156,7 +156,17 @@ app.post('/action/new', (req, res) => {
 	if(!req.body.text){
 		res.send('You must enter an input')
 	}
-	insertAction(req.body.text)
+	listItem(req.body.text)
+	.then(() => {
+		insertAction(req.body.action_title, req.body.description, req.body.redFlag, req.body.color_category)
+		.catch(err => {
+			console.log("INSERT ITEM ERROR", err)
+		}).then(() => {
+			res.status(200).end()
+		}).catch(err => {
+			console.log("INSERT ITEM ERROR VOL.2", err)
+		})
+	})
 });
 
 app.get('/dayli_list/:id/actions', (req, res) => {
