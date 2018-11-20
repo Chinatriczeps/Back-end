@@ -11,6 +11,17 @@ const connection = (knex) => {
     })
   }
 
+  const insertAction = (action_title, description, redFlag, color_category) => {
+  	return knex('action').returning('*')
+  		.insert({
+  			action_title: action_title,
+  			description: description,
+  			redFlag: redFlag,
+  			color_category: color_category,
+  			dayli_list_id: dayli_list
+  		})
+  }
+
   const listItem = (input) => {
   	return fetch(`http://localhost:8080`)
   	.then((res) => {

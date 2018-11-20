@@ -122,6 +122,7 @@ app.get('/overview', (req, res) => {
 	res.redirect('/overview')
 })
 
+
 app.post('/dayli_list/:id/edit', (req, res) => {
   return knex('dayli_list').returning('*').where({
     id: req.body.id,
@@ -150,6 +151,13 @@ app.post('/dayli_list/:id/edit', (req, res) => {
 // 		console.log("Dayli list error", err)
 // 	})
 // })
+
+app.post('/action/new', (req, res) => {
+	if(!req.body.text){
+		res.send('You must enter an input')
+	}
+	insertAction(req.body.text)
+});
 
 app.get('/dayli_list/:id/actions', (req, res) => {
 	knex
