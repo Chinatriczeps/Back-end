@@ -156,7 +156,7 @@ app.post('/action/new', (req, res) => {
 	if(!req.body.text){
 		res.send('You must enter an input')
 	}
-	listItem(req.body.text)
+	newAction(req.body.text)
 	.then(() => {
 		insertAction(req.body.action_title, req.body.description, req.body.redFlag, req.body.color_category)
 		.catch(err => {
