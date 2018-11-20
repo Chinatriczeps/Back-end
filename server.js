@@ -103,7 +103,8 @@ app.post('/user/:id/edit', (req, res) => {
     id: req.params.id
   }).update({
     email: req.body.email,
-    password: 'string'
+    password: "string"
+    // password: bcrypt.hashSync(req.body.password, 10)
   }).then(() => {
   	res.send("user has been updated")
     // res.redirect('/');
@@ -114,7 +115,6 @@ app.post('/user/:id/edit', (req, res) => {
 });
 
 app.get('/overview', (req, res) => {
-	// for graphs
 	res.send("overview")
 })
 
