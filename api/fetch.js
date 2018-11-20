@@ -11,19 +11,20 @@ const connection = (knex) => {
     })
   }
 
-  const insertAction = (action_title, description, redFlag, color_category) => {
+  const insertAction = (action_title, description, color_category, dayli_list, redFlag) => {
   	return knex('action').returning('*')
   		.insert({
   			action_title: action_title,
   			description: description,
-  			redFlag: redFlag,
+  			redFlag: true,
   			color_category: color_category,
-  			dayli_list_id: dayli_list
+  			dayli_list_id: dayli_list,
+  			active: true
   		})
   }
 
-  const listItem = (input) => {
-  	return fetch(`http://localhost:8080`)
+  const newAction = (input) => {
+  	return fetch(`http://localhost:8080/action/new`)
   	.then((res) => {
       return res.json()
     }).catch(err => {
@@ -31,7 +32,25 @@ const connection = (knex) => {
     })
   }
 
-  return listItem;
+  const listEdit = (input) => {
+  	return fetch(`/dayli_list/${req.body.id}/edit`)
+  	.then((res) => {
+      return res.json()
+    }).catch(err => {
+      console.log("List item res.json", err);
+    })
+  }
+
+  const userEdit = (input) => {
+  	return fetch(`http://localhost:8080/user/${req.body.id}/edit`)
+  	.then((res) => {
+      return res.json()
+    }).catch(err => {
+      console.log("List item res.json", err);
+    })
+  }
+
+  return {newAction, listEdit, userEdit};
 
 }
 
