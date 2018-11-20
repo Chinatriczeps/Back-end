@@ -32,17 +32,21 @@ app.use("/routes/users", usersRoutes(knex));
 app.use("/routes/dayli_list", daily_listRoutes(knex));
 app.use("/routes/actions", actionRoutes(knex));
 
+const doSomething = async () => {
+  let data = await someRemoteOperation();
+  await stall(); // stalls for the default 3 seconds
+  await doSomethingElse(data);
+}
+
+
 app.get("/", (req, res) => {
-	// knex
-	//   .select("*")
-	//   .from("users")
-	//   .then((results) => {
-	//     console.log(results, "results")
-	//     res.json(results);
-	// }).catch(err => {
-	// 	console.log("users route", err)
-	// });
-	res.send('duuuuude')
+	knex('dayli_list')
+	.where('active', true)
+	.then((result) => {
+		res.json(result)
+	}).catch((err) => {
+		console.log("Dayli list error", err)
+	})
 });
 
 app.post('/login', (req, res) => {
@@ -75,35 +79,35 @@ app.post('/register', (req, res) => {
 	res.send("registration route");
 });
 
-app.get('/users', (req, res) => {
-	knex
-		.select('*')
-		.from('users')
-		.then((results) => {
-			res.json(results)
-		}).catch((err) => {
-			console.log("Users ID req", err)
-		})
-})
+// app.get('/users', (req, res) => {
+// 	knex
+// 		.select('*')
+// 		.from('users')
+// 		.then((results) => {
+// 			res.json(results)
+// 		}).catch((err) => {
+// 			console.log("Users ID req", err)
+// 		})
+// })
 
-app.get('/user/:id', (req, res) => {
-	knex
-		.select('*')
-		.from('users')
-		.where({id: req.params.id})
-		.then((results) => {
-			res.json(results)
-		}).catch((err) => {
-			console.log("id error", err)
-		})
-})
+// app.get('/user/:id', (req, res) => {
+// 	knex
+// 		.select('*')
+// 		.from('users')
+// 		.where({id: req.params.id})
+// 		.then((results) => {
+// 			res.json(results)
+// 		}).catch((err) => {
+// 			console.log("id error", err)
+// 		})
+// })
 
 app.post('/user/:id/edit', (req, res) => {
 	knex('users').where({
     id: req.params.id
   }).update({
     email: req.body.email,
-    password: "string"
+    password: bcrypt.hashSync(req.body.password, 10)
     // password: bcrypt.hashSync(req.body.password, 10)
   }).then(() => {
   	res.send("user has been updated")
@@ -115,7 +119,7 @@ app.post('/user/:id/edit', (req, res) => {
 });
 
 app.get('/overview', (req, res) => {
-	res.send("overview")
+	res.redirect('/overview')
 })
 
 app.post('/dayli_list/:id/edit', (req, res) => {
@@ -129,23 +133,23 @@ app.post('/dayli_list/:id/edit', (req, res) => {
     console.log("editing daylist", err);
   }).then(() => {
   	res.send('Dayli list has been updated')
-  	// res.redirect('/')
+  	doSomething()
+  	res.redirect('/')
   	return;
   }).catch((err) => {
   	console.log("REDIRECT ERROR", err)
   })
 })
 
-app.get('/dayli_list', (req, res) => {
-	knex
-	.select('*')
-	.from('dayli_list')
-	.then((result) => {
-		res.json(result)
-	}).catch((err) => {
-		console.log("Dayli list error", err)
-	})
-})
+// app.get('/dayli_list', (req, res) => {
+// 	knex('dayli_list')
+// 	.where('active', true)
+// 	.then((result) => {
+// 		res.json(result)
+// 	}).catch((err) => {
+// 		console.log("Dayli list error", err)
+// 	})
+// })
 
 app.get('/dayli_list/:id/actions', (req, res) => {
 	knex
