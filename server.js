@@ -26,7 +26,7 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const daily_listRoutes = require('./routes/dayli_list');
 const actionRoutes = require("./routes/actions");
-const fetchedData = require('./api/fetch.js')(knex)
+const {newAction, listEdit, userEdit} = require('./api/fetch.js')(knex)
 
 app.use("/routes/users", usersRoutes(knex));
 app.use("/routes/dayli_list", daily_listRoutes(knex));

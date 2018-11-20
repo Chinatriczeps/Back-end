@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const connection = (knex) => {
+
   const insertListItem = (active, date) => {
     return knex('dayli_list').returning('*')
     .insert({
@@ -28,7 +29,7 @@ const connection = (knex) => {
   	.then((res) => {
       return res.json()
     }).catch(err => {
-      console.log("List item res.json", err);
+      console.log("New ACTION ERROR", err);
     })
   }
 
@@ -37,7 +38,7 @@ const connection = (knex) => {
   	.then((res) => {
       return res.json()
     }).catch(err => {
-      console.log("List item res.json", err);
+      console.log("LIST EDIT ERROR", err);
     })
   }
 
@@ -46,7 +47,7 @@ const connection = (knex) => {
   	.then((res) => {
       return res.json()
     }).catch(err => {
-      console.log("List item res.json", err);
+      console.log("USER EDIT ERROR", err);
     })
   }
 
