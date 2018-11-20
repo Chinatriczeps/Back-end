@@ -136,6 +136,30 @@ app.post('/dayli_list/:id/edit', (req, res) => {
   })
 })
 
+app.get('/dayli_list', (req, res) => {
+	knex
+	.select('*')
+	.from('dayli_list')
+	.then((result) => {
+		res.json(result)
+	}).catch((err) => {
+		console.log("Dayli list error", err)
+	})
+})
+
+app.get('/dayli_list/:id/actions', (req, res) => {
+	knex
+		.select('*')
+		.from('actions')
+		.where({
+		dayli_list_id: req.params.id
+		}).then((result) => {
+			res.json(result)
+		}).catch((err) => {
+			console.log("Actions list error", err)
+		})
+})
+
 app.listen(PORT, () => {
   console.log("App listening on port " + PORT);
 });
