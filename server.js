@@ -26,18 +26,11 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const daily_listRoutes = require('./routes/dayli_list');
 const actionRoutes = require("./routes/actions");
-const {newAction, listEdit, userEdit} = require('./api/fetch.js')(knex)
+const {newAction, listEdit, userEdit, insertAction} = require('./api/fetch.js')(knex)
 
 app.use("/routes/users", usersRoutes(knex));
 app.use("/routes/dayli_list", daily_listRoutes(knex));
 app.use("/routes/actions", actionRoutes(knex));
-
-const doSomething = async () => {
-  let data = await someRemoteOperation();
-  await stall(); // stalls for the default 3 seconds
-  await doSomethingElse(data);
-}
-
 
 app.get("/", (req, res) => {
 	knex('dayli_list')
@@ -134,7 +127,6 @@ app.post('/dayli_list/:id/edit', (req, res) => {
     console.log("editing daylist", err);
   }).then(() => {
   	res.send('Dayli list has been updated')
-  	doSomething()
   	res.redirect('/')
   	return;
   }).catch((err) => {
@@ -151,7 +143,11 @@ app.post('/dayli_list/:id/edit', (req, res) => {
 // 		console.log("Dayli list error", err)
 // 	})
 // })
-
+console.log(newAction);
+console.log(newAction);
+console.log(newAction);
+console.log(newAction);
+console.log(newAction);
 app.post('/action/new', (req, res) => {
 	if(!req.body.text){
 		res.send('You must enter an input')
