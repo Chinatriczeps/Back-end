@@ -12,29 +12,30 @@ const connection = (knex) => {
     })
   }
 
-  const insertAction = (action_title, description, color_category, dayli_list, redFlag) => {
-  	return knex('action').returning('*')
+  const insertAction = ({action_title, description, color_category, redFlag}, dailyListID) => {
+  	return knex('actions').returning('*')
   		.insert({
   			action_title: action_title,
   			description: description,
-  			redFlag: true,
   			color_category: color_category,
-  			dayli_list_id: dayli_list,
-  			active: true
+  			redFlag: redFlag,
+  			dayli_list_id: dailyListID
   		})
   }
-
-  const newAction = (input) => {
-  	return fetch(`http://localhost:8080/action/new`)
-  	.then((res) => {
-      return res.json()
-    }).catch(err => {
-      console.log("New ACTION ERROR", err);
-    })
-  }
+ 	// already getting info in post method
+  // const newAction = (input) => {
+  // 	return fetch(`http://localhost:8080/action/new`, {
+  // 		method: 'POST'
+  // 	})
+  // 	.then((res) => {
+  //     return res.json()
+  //   }).catch(err => {
+  //     console.log("New ACTION ERROR", err);
+  //   })
+  // }
 
   const listEdit = (input) => {
-  	return fetch(`/dayli_list/${req.body.id}/edit`)
+  	return fetch(`/dayli_list/${req.params.id}/edit`)
   	.then((res) => {
       return res.json()
     }).catch(err => {
@@ -43,7 +44,7 @@ const connection = (knex) => {
   }
 
   const userEdit = (input) => {
-  	return fetch(`http://localhost:8080/user/${req.body.id}/edit`)
+  	return fetch(`http://localhost:8080/user/${req.params.id}/edit`)
   	.then((res) => {
       return res.json()
     }).catch(err => {
@@ -51,7 +52,7 @@ const connection = (knex) => {
     })
   }
 
-  return {newAction, listEdit, userEdit};
+  return {listEdit, userEdit, insertAction};
 
 }
 

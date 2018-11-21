@@ -18,6 +18,7 @@ const bcrypt  		= require('bcrypt');
 app.use(morgan('dev'));
 app.use(knexLogger(knex));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(express.static("public"));
 app.use(express.static("public"));
@@ -143,27 +144,25 @@ app.post('/dayli_list/:id/edit', (req, res) => {
 // 		console.log("Dayli list error", err)
 // 	})
 // })
-console.log(newAction);
-console.log(newAction);
-console.log(newAction);
-console.log(newAction);
-console.log(newAction);
-app.post('/action/new', (req, res) => {
-	if(!req.body.text){
-		res.send('You must enter an input')
-	}
-	newAction(req.body.text)
-	.then(() => {
-		insertAction(req.body.action_title, req.body.description, req.body.redFlag, req.body.color_category)
-		.catch(err => {
-			console.log("INSERT ITEM ERROR", err)
-		}).then(() => {
-			res.status(200).end()
-		}).catch(err => {
-			console.log("INSERT ITEM ERROR VOL.2", err)
-		})
-	})
-});
+
+
+
+// app.post('/action/new', (req, res) => {
+// 	// if(!req.body.text){
+// 	// 	res.send('You must enter an input')
+// 	// }
+// 	// newAction(req.body.text)
+// 	// .then(() => {
+// 		insertAction(req.body)
+// 		.catch(err => {
+// 			console.log("INSERT ITEM ERROR", err)
+// 		}).then(() => {
+// 			res.json()
+// 		}).catch(err => {
+// 			console.log("INSERT ITEM ERROR VOL.2", err)
+// 		})
+// 	// })
+// });
 
 app.get('/dayli_list/:id/actions', (req, res) => {
 	knex
@@ -176,7 +175,18 @@ app.get('/dayli_list/:id/actions', (req, res) => {
 		}).catch((err) => {
 			console.log("Actions list error", err)
 		})
-})
+});
+
+app.post('/dayli_list/:dlID/actions', (req, res) => {
+  insertAction(req.body, req.params.dlID)
+		.catch(err => {
+			console.log("INSERT ITEM ERROR", err)
+		}).then(() => {
+			res.json()
+		}).catch(err => {
+			console.log("INSERT ITEM ERROR VOL.2", err)
+		})
+});
 
 app.listen(PORT, () => {
   console.log("App listening on port " + PORT);
