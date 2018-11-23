@@ -73,6 +73,9 @@ app.post('/register', (req, res) => {
 	res.send("registration route");
 });
 
+
+// 
+
 // app.get('/users', (req, res) => {
 // 	knex
 // 		.select('*')
@@ -135,15 +138,18 @@ app.post('/dayli_list/:id/edit', (req, res) => {
   })
 })
 
-// app.get('user/:id/dayli_list', (req, res) => {
-// 	knex('dayli_list')
-// 	.where('active', true)
-// 	.then((result) => {
-// 		res.json(result)
-// 	}).catch((err) => {
-// 		console.log("Dayli list error", err)
-// 	})
-// })
+// 
+app.get('user/:id/dayli_list', (req, res) => {
+	knex('dayli_list')
+	.where({
+		user_id: req.params.id
+	})
+	.then((result) => {
+		res.json(result)
+	}).catch((err) => {
+		console.log("Dayli list error", err)
+	})
+})
 
 
 

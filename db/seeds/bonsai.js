@@ -26,9 +26,9 @@ exports.seed = function(knex, Promise) {
         {id: 7, active: false, users_id: 1},
         {id: 8, active: false, users_id: 1},
         {id: 9, active: false, users_id: 1},
-        {id: 10, active: false, users_id: 1},
-        {id: 11, active: false, users_id: 1},
-        {id: 12, active: false, users_id: 1},
+        {id: 10, active: false, users_id: 2},
+        {id: 11, active: false, users_id: 2},
+        {id: 12, active: false, users_id: 2},
         
       ])
   })
