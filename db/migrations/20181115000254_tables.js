@@ -21,7 +21,7 @@ exports.up = function(knex, Promise) {
 		table.string('description');
 		table.boolean('redFlag').notNull();
 		table.string('color_category')
-    	table.integer('dayli_list_id').references('id').inTable('dayli_list');
+    table.integer('dayli_list_id').references('id').inTable('dayli_list');
 	})
 };
 

@@ -84,17 +84,17 @@ app.post('/register', (req, res) => {
 // 		})
 // })
 
-// app.get('/user/:id', (req, res) => {
-// 	knex
-// 		.select('*')
-// 		.from('users')
-// 		.where({id: req.params.id})
-// 		.then((results) => {
-// 			res.json(results)
-// 		}).catch((err) => {
-// 			console.log("id error", err)
-// 		})
-// })
+app.get('/user/:id', (req, res) => {
+	knex
+		.select('*')
+		.from('users')
+		.where({id: req.params.id})
+		.then((results) => {
+			res.json(results)
+		}).catch((err) => {
+			console.log("id error", err)
+		})
+})
 
 app.post('/user/:id/edit', (req, res) => {
 	knex('users').where({
@@ -135,7 +135,7 @@ app.post('/dayli_list/:id/edit', (req, res) => {
   })
 })
 
-// app.get('/dayli_list', (req, res) => {
+// app.get('user/:id/dayli_list', (req, res) => {
 // 	knex('dayli_list')
 // 	.where('active', true)
 // 	.then((result) => {
@@ -178,7 +178,9 @@ app.get('/dayli_list/:id/actions', (req, res) => {
 });
 
 app.post('/dayli_list/:dlID/actions', (req, res) => {
-  insertAction(req.body, req.params.dlID)
+	console.log(req.body)
+	insertAction(req.body, req.params.dlID)
+	
 		.catch(err => {
 			console.log("INSERT ITEM ERROR", err)
 		}).then(() => {
