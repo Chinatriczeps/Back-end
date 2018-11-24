@@ -138,17 +138,17 @@ app.post('/dayli_list/:id/edit', (req, res) => {
   })
 })
 
-// 
-app.get('user/:id/dayli_list', (req, res) => {
-	knex('dayli_list')
-	.where({
-		user_id: req.params.id
-	})
-	.then((result) => {
-		res.json(result)
-	}).catch((err) => {
-		console.log("Dayli list error", err)
-	})
+// actions of a particular user
+app.get('/user/:id/actions', (req, res) => {
+	knex('actions')
+		.innerJoin('dayli_list', 'actions.dayli_list_id', 'dayli_list.id')
+		.where('dayli_list.users_id', req.params.id)
+		.select('actions.*', 'dayli_list.users_id')
+		.then((result) => {
+			res.json(result)
+		}).catch((err) => {
+			console.log("AHAHAHAHAHHAAH", err)
+		})
 })
 
 
