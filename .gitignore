@@ -1,3 +1,4 @@
 node_modules/
 .env
 actions_by_user_query.wtf.js
+logfile
